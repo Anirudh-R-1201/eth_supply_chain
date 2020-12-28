@@ -23,8 +23,7 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-require('babel-register');
-require('babel-polyfill');
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -48,7 +47,9 @@ module.exports = {
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
      },
-
+    
+      contracts_directory: './src/contracts/',
+      contracts_build_directory: './src/artifacts/',
     // Another network with more advanced options...
     // advanced: {
       // port: 8777,             // Custom port
