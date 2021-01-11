@@ -57,14 +57,14 @@ contract('Asset', (accounts) => {
     describe('FAILURE', () => {
 
       it('must be SENT by custodian', async () => {
-        sender = accounts[1] // Receiver cannot send
+        sender = accounts[1] 
         receiver = accounts[1]
         await asset.send(receiver, { from: sender }).should.be.rejected;
       })
 
       it('custodian cannot be recipient', async () => {
         sender = accounts[0]
-        receiver = accounts[0] // Cannot be custodian
+        receiver = accounts[0] 
         await asset.send(receiver, { from: receiver }).should.be.rejected;
       })
 
@@ -91,10 +91,10 @@ contract('Asset', (accounts) => {
       it('logs action', async () => {
         const actions = await asset.getPastEvents('Action', { fromBlock: 0, toBlock: 'latest' } )
         const action = actions[actions.length - 1].args
-        assert.equal(action.name, 'SEND')
-        assert.equal(action.account, sender)
-        assert.equal(action.custodian, receiver)
-        assert.typeOf(action.timestamp, 'object')
+        assert.equal(action.name,'SEND')
+        assert.equal(action.account,sender)
+        assert.equal(action.custodian,receiver)
+        assert.typeOf(action.timestamp,'object')
       })
     })
   })
@@ -104,19 +104,18 @@ contract('Asset', (accounts) => {
     describe('FAILURE', () => {
 
       it('RECEIVED by custodian', async () => {
-        receiver = accounts[9] // Some account
+        receiver = accounts[9]
         await asset.receive({ from: receiver }).should.be.rejected;
       })
 
     })
 
-    describe('SUCCESS', () => {
+    describe('SUCCESS',() => {
 
       before(async () => {
         receiver = accounts[1]
         await asset.receive({ from: receiver })
       })
-
       it('sets custodian', async () => {
         const custodian = await asset.custodian()
         assert.equal(custodian, receiver)
